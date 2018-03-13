@@ -1,17 +1,20 @@
 # PHP-colorQR
 PHP-colorQR is a concept color QR barcode generator.
 
-# Color Palette 
-The Color QR barcode will utilize an 8 color palette. Consisting of:
+# CSS color map
+The Color QR barcode utilizes an 8 color palette. 
 
-- White
-- Black
-- Red
-- Orange
-- Yellow
-- Green
-- Cyan
-- Magenta
+The Color QR pallette will be mapped to the following css colors:
+
+- white
+- black
+- red
+- orange
+- yellow
+- green
+- blue
+- pink
+
 
 # Encoding
 Data is encoded into color pairs. A normal color pair is used where the characters fall within the range A-Za-z0-9. 
