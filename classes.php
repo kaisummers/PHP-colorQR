@@ -4,24 +4,25 @@
  */
 class colorQR
 {
-    	// Color combination array matrix
+	// Always runs
     	public function __construct()
     	{
-		$GLOBALS['w'] = 5; // Set size of color segments
+        	// Width/Height of each segment
+	    	$GLOBALS['w'] = 10; // Set size of color segments
 		
 		// CSS Styles
-		$GLOBALS['c'] = "<style>.cqr_cont{border:3px dashed black}.cqr{display:inline-block;width:".$GLOBALS['w']."px;height:".$GLOBALS['w']."px;}.w{background-color:white}.b{background-color:black}.r{background-color:red}.o{background-color:orange}.y{background-color:yellow}.g{background-color:limegreen}.c{background-color:blue}.m{background-color:pink}</style>";
+	    	$GLOBALS['c'] = "<style>.cqr_cont{border:3px dashed black}.cqr{display:inline-block;width:".$GLOBALS['w']."px;height:".$GLOBALS['w']."px;}.w{background-color:white}.b{background-color:black}.r{background-color:red}.o{background-color:orange}.y{background-color:yellow}.g{background-color:limegreen}.c{background-color:blue}.m{background-color:pink}</style>";
 		
-		// Create array of Base62 encoded color matrix
-		$m = array_merge(range('a','z'), range('A', 'Z'), range('0', '9'), [62=>"NUL", 63=>"PAD"]);
-        	$p = ['w','b','r','o','y','g','c','m'];
-        	$n = 7;
-        	foreach($m as $k=>$v)
+	    	// Array of shortcode colors & count
+        	$p = ['w','b','r','o','y','g','c','m']; 
+        	$n = count($p)-1;
+        
+        	// Create Base62 color map array 
+        	foreach($m = array_merge(range('a','z'), range('A', 'Z'), range('0', '9'), [62=>"NUL", 63=>"PAD"]) as $k=>$v)
         	{
-            		$n = $n == 7 ? 0 : ++$n;
-            		$a[$m[$k]] = $p[floor($k/8)]." ".$p[$n];
+        		$a[$m[$k]] = $p[floor($k/8)]." ".$p[$n = $n == 7 ? 0 : ++$n];
         	}
-       		$GLOBALS['m'] = $a; // Global color map
+       		$GLOBALS['m'] = $a; // Set global color map
     	}
     
 	// Create colorQR                    
@@ -37,20 +38,16 @@ class colorQR
         	$r = $r %2 == 0 ? $r : $r+1;
 		$f = $GLOBALS['w']*$r."px";
 		$p = ($r*$r-$l)/2;
-        
-		// ColorQR Container
-		$q = "<div class=\"cqr_cont\" style=\"width:$f!important;height:$f!important;\">";
   		
 		// Make colorQR elements
 		foreach(str_split($d) as $v)
 		{
-                	$e = explode(" ", $GLOBALS['m'][$v]);
-                	$q .= "<span class=\"cqr ".$e[0]."\"></span><span class=\"cqr ".$e[1]."\"></span>";
+        		$e = explode(" ", $GLOBALS['m'][$v]);
+        		$q .= "<span class=\"cqr ".$e[0]."\"></span><span class=\"cqr ".$e[1]."\"></span>";
         	}
-		
-		// Pad remaining space
-        	if($p > 0)
-		{
+    
+        	// Pad remaining space
+        	if($p > 0){
             		do
             		{   
                 		$e = !isset($s) ? explode(" ", $GLOBALS['m']['PAD']) : explode(" ", $GLOBALS['m'][$s]);
@@ -59,9 +56,8 @@ class colorQR
             		} 
 			while ($p > 0);
         	}
-        	$q .= "</div>";
-		
-		return $GLOBALS['c'].$q;
+
+		return $GLOBALS['c']."<div class=\"cqr_cont\" style=\"width:$f!important;height:$f!important;\">$q</div>";
 	}	
 }
  
