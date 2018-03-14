@@ -19,7 +19,7 @@ class colorQR
         	foreach($m as $k=>$v)
         	{
             		$n = $n == 7 ? 0 : ++$n;
-            		$a[$m[$k]] = $p[floor(($k)/8)]." ".$p[$n];
+            		$a[$m[$k]] = $p[floor($k/8)]." ".$p[$n];
         	}
        		$GLOBALS['m'] = $a; // Global color map
     	}
