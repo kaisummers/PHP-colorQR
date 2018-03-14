@@ -4,15 +4,19 @@
  */
 class colorQR
 {
-    	// Color combination matrix
-    	const MATRIX = ['a'=>'w w','b'=>'w b','c'=>'w r','d'=>'w o','e'=>'w y','f'=>'w g','g'=>'w c','h'=>'w m',
-        		'i'=>'b w','j'=>'b b','k'=>'b r','l'=>'b o','m'=>'b y','n'=>'b g','o'=>'b c','p'=>'b m',
-                	'q'=>'r w','r'=>'r b','s'=>'r r','t'=>'r o','u'=>'r y','v'=>'r g','w'=>'r c','x'=>'r m',
-                        'y'=>'o w','z'=>'o b','A'=>'o r','B'=>'o o','C'=>'o y','D'=>'o g','E'=>'o c','F'=>'o m',
-                        'G'=>'y w','H'=>'y b','I'=>'y r','J'=>'y o','K'=>'y y','L'=>'y g','M'=>'y c','N'=>'y m',
-                        'O'=>'g w','P'=>'g b','Q'=>'g r','R'=>'g o','S'=>'g y','T'=>'g g','U'=>'g c','V'=>'g m',
-                        'W'=>'c w','X'=>'c b','Y'=>'c r','Z'=>'c o','0'=>'c y','1'=>'c g','2'=>'c c','3'=>'c m',
-                        '4'=>'m w','5'=>'m b','6'=>'m r','7'=>'m o','8'=>'m y','9'=>'m g','NULL'=>'m c','RES'=>'m m' ];
+    	// Color combination array matrix
+    	public function __construct()
+    	{
+        	$m = array_merge(range('a','z'), range('A', 'Z'), range('0', '9'), [62=>"NUL", 63=>"PAD"]);
+        	$p = ['w','b','r','o','y','g','c','m'];
+        	$n = 7;
+        	foreach($m as $k=>$v)
+        	{
+            		$n = $n == 7 ? 0 : ++$n;
+            		$a[$m[$k]] = $p[floor(($k)/8)]." ".$p[$n];
+        	}
+       		$GLOBALS['matrix'] = $a;
+    	}
     
 	// Create colorQR                    
 	public static function create($d)
@@ -34,7 +38,7 @@ class colorQR
 		// Make colorQR elements
 		foreach(str_split($d) as $v)
 		{
-                	$e = explode(" ", self::MATRIX[$v]);
+                	$e = explode(" ", $GLOBALS['matrix'][$v]);
                 	$q .= "<span class=\"cqr ".$e[0]."\"></span><span class=\"cqr ".$e[1]."\"></span>";
         	}
         	$q .= "</div>";
@@ -43,7 +47,7 @@ class colorQR
 	}	
 }
  
- /*
+/*
  * PHP-base62
  */
 class base62
