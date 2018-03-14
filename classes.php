@@ -32,8 +32,11 @@ class colorQR
 		$d = $c->encode($d);
 		
 		// Calculate Row width
-        	$r = ceil(sqrt(strlen($d)*2));
+		$l = strlen($d)*2;
+		$r = ceil(sqrt($l));
+        	$r = $r %2 == 0 ? $r : $r+1;
 		$f = $GLOBALS['w']*$r."px";
+		$p = ($r*$r-$l)/2;
         
 		// ColorQR Container
 		$q = "<div class=\"cqr_cont\" style=\"width:$f!important;height:$f!important;\">";
@@ -43,6 +46,18 @@ class colorQR
 		{
                 	$e = explode(" ", $GLOBALS['m'][$v]);
                 	$q .= "<span class=\"cqr ".$e[0]."\"></span><span class=\"cqr ".$e[1]."\"></span>";
+        	}
+		
+		// Pad remaining space
+        	if($p > 0)
+		{
+            		do
+            		{   
+                		$e = !isset($s) ? explode(" ", $GLOBALS['m']['PAD']) : explode(" ", $GLOBALS['m'][$s]);
+                		$q .= "<span class=\"cqr ".$e[0]."\"></span><span class=\"cqr ".$e[1]."\"></span>";
+                		$p--; $s = $s == 9 ? 0 : ++$s;
+            		} 
+			while ($p > 0);
         	}
         	$q .= "</div>";
 		
