@@ -7,7 +7,13 @@ class colorQR
     	// Color combination array matrix
     	public function __construct()
     	{
-        	$m = array_merge(range('a','z'), range('A', 'Z'), range('0', '9'), [62=>"NUL", 63=>"PAD"]);
+		$GLOBALS['w'] = 5; // Set size of color segments
+		
+		// CSS Styles
+		$GLOBALS['c'] = "<style>.cqr_cont{border:3px dashed black}.cqr{display:inline-block;width:".$GLOBALS['w']."px;height:".$GLOBALS['w']."px;}.w{background-color:white}.b{background-color:black}.r{background-color:red}.o{background-color:orange}.y{background-color:yellow}.g{background-color:limegreen}.c{background-color:blue}.m{background-color:pink}</style>";
+		
+		// Create array of Base62 encoded color matrix
+		$m = array_merge(range('a','z'), range('A', 'Z'), range('0', '9'), [62=>"NUL", 63=>"PAD"]);
         	$p = ['w','b','r','o','y','g','c','m'];
         	$n = 7;
         	foreach($m as $k=>$v)
@@ -15,9 +21,7 @@ class colorQR
             		$n = $n == 7 ? 0 : ++$n;
             		$a[$m[$k]] = $p[floor(($k)/8)]." ".$p[$n];
         	}
-       		$GLOBALS['m'] = $a;
-		$GLOBALS['w'] = 5;
-		$GLOBALS['c'] = "<style>.cqr_cont{border:3px dashed black}.cqr{display:inline-block;width:".$GLOBALS['w']."px;height:".$GLOBALS['w']."px;}.w{background-color:white}.b{background-color:black}.r{background-color:red}.o{background-color:orange}.y{background-color:yellow}.g{background-color:limegreen}.c{background-color:blue}.m{background-color:pink}</style>";
+       		$GLOBALS['m'] = $a; // Global color map
     	}
     
 	// Create colorQR                    
