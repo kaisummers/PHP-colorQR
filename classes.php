@@ -18,7 +18,7 @@ class colorQR
 	public static function create($d)
 	{
 		// Set width & height
-		$w = '5px';
+		$w = 5;
 		
         	// Encode as base62
 		$c = new base62();
